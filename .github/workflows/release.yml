@@ -1,0 +1,41 @@
+name: Build and Release
+
+on:
+    push:
+        tags:
+            - "v*" # Trigger on tags like v1.0.0
+
+jobs:
+    build-and-release:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write # Needed to create releases
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Set up Bun
+              uses: oven-sh/setup-bun@v1
+              with:
+                  bun-version: latest # or specify a version
+
+            - name: Install dependencies
+              run: bun install --frozen-lockfile
+
+            - name: Build for Windows (x64)
+              run: bun run build:windows:x64
+
+            - name: Build for Linux (x64)
+              run: bun run build:linux:x64
+
+            - name: Build for Darwin (arm64)
+              run: bun run build:darwin:arm64
+
+            - name: Create Release
+              id: create_release
+              uses: ncipollo/release-action@v1
+              with:
+                  artifacts: "dist/compound-*"
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  draft: true
