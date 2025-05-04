@@ -1,0 +1,21 @@
+{
+    "name": "init-compoundooor",
+    "module": "index.ts",
+    "type": "module",
+    "scripts": {
+        "start": "bun index.ts",
+        "build": "bun build index.ts --minify --sourcemap --compile --outfile dist/compound",
+        "build:windows:x64": "bun build index.ts --minify --sourcemap --compile --target=bun-windows-x64 --outfile dist/compound.exe",
+        "build:linux:x64": "bun build index.ts --minify --sourcemap --compile --target=bun-linux-x64 --outfile dist/compound",
+        "build:darwin:arm64": "bun build index.ts --minify --sourcemap --compile --target=bun-darwin-arm64 --outfile dist/compound"
+    },
+    "devDependencies": {
+        "@types/bun": "latest"
+    },
+    "peerDependencies": {
+        "typescript": "^5.0.0"
+    },
+    "dependencies": {
+        "@initia/initia.js": "^1.0.8"
+    }
+}
