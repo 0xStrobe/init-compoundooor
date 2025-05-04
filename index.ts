@@ -1,6 +1,5 @@
 process.noDeprecation = true;
 
-import { sleep } from "bun";
 import { compoundUsdcInitLpProcedure, createWallet } from "./src/lib";
 
 const args = process.argv.slice(2);
@@ -17,6 +16,8 @@ if (!PRIVATE_KEY) {
     console.error("    $ PRIVATE_KEY=0x... ./compound");
     process.exit(1);
 }
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const main = async () => {
     const wallet = createWallet(PRIVATE_KEY);
